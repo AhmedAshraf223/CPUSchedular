@@ -7,9 +7,11 @@ class Process {
     private int arrivalTime ;
     private int burst ; 
     private int priority ;
-    public PriorityQueue<Process> process= new PriorityQueue<>() ;
 
-    Process(){}  
+    Process(){
+        this.arrivalTime = this.burst = this.priority = 0 ; 
+
+    }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
         this.arrivalTime = arrivalTime ; 
