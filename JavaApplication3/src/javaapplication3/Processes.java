@@ -80,6 +80,13 @@ class Process {
     {
         return TurnaroundTime ; 
     }
+
     
-    
+    public int compareTo(Process other) {
+        // Compare based on the 'burst' attribute
+        return Integer.compare(this.burst, other.burst);
+    }
 }
+    
+    
+
