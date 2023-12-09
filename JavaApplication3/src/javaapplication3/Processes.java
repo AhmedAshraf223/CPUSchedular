@@ -7,6 +7,8 @@ class Process {
     private int arrivalTime ;
     private int burst ; 
     private int priority ;
+    private int WaitingTime;
+	private int TurnaroundTime;
 
     Process(){
         this.arrivalTime = this.burst = this.priority = 0 ; 
@@ -59,5 +61,25 @@ class Process {
     int getPriorty()
     {
         return priority ;
-    }   
+    } 
+
+    void SetWaitingTime(int WaitingTime)
+    {
+        this.WaitingTime = WaitingTime ;
+    }
+    int getWaitingTime()
+    {
+        return WaitingTime ; 
+    }
+
+    void setTurnArroundTime(int TurnaroundTime)
+    {
+        this.TurnaroundTime = TurnaroundTime ;
+    }
+    int getTurnArroundTime()
+    {
+        return TurnaroundTime ; 
+    }
+    
+    
 }
