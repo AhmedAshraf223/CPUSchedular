@@ -9,15 +9,19 @@ class Process {
     private int priority ;
     private int WaitingTime;
 	private int TurnaroundTime;
+    public int remainingTime;
+    public int startTime;
+    public int finishTime;
 
     Process(){
-        this.arrivalTime = this.burst = this.priority = 0 ; 
-
+        this.startTime = 0;
+        this.finishTime = 0;
     }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
         this.arrivalTime = arrivalTime ; 
         this.burst = burst ;
+        this.remainingTime = brust;
     }
 
     Process(String name , int arrivalTime , int burst , int priority ){
@@ -80,8 +84,12 @@ class Process {
     {
         return TurnaroundTime ; 
     }
-
-    
+    int getRemainingTime(){
+        return remainingTime; 
+    }
+    void setRemainingTime(int remainingTime){
+        this.remainingTime = remainingTime;
+    }
     public int compareTo(Process other) {
         // Compare based on the 'burst' attribute
         return Integer.compare(this.burst, other.burst);

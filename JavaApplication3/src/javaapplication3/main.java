@@ -20,21 +20,18 @@ public class main {
 			p.setName(input.nextLine());
 		
 			System.out.println("Enter Process Burst Time :");
-			p.setBurst(input.nextInt())  ;
+			p.setBurst(input.nextInt());
+            p.setRemainingTime(p.getBurst());
 		
 			System.out.println("Enter Process Arraival Time :");
 			p.setArrivalTime(input.nextInt()) ;
 			Processes.add(p);	
 		}
-        SJF algo = new SJF(Processes) ;
+        SRTF algo = new SRTF(Processes);
         algo.Scheduling(); 
 
-        algo.getRangeProcess();
-        System.out.println("average waiting time :");
-        System.out.println(algo.getAvgWaitingTime());
-        System.out.println("average turnarround time :");
-        System.out.println(algo.getAvgTurnArroundTime());
-
+        
 
     }
 }
+
