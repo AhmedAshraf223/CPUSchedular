@@ -14,7 +14,7 @@ class Process {
     public int finishTime;
 
     Process(){
-        this.startTime = 0;
+        this.startTime = -1;
         this.finishTime = 0;
     }  
     Process(String name , int arrivalTime , int burst ){

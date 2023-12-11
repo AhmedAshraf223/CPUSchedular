@@ -20,50 +20,73 @@ public class SRTF {
         int currentTime = 0;
         int executed = 0;
         Process currentProcess = null;
-
+     
         while (executed < processes.size()) {
             Process shortestProcess = null;
             int shortestRemainingTime = Integer.MAX_VALUE;
-
+    
             for (Process process : readyQueue) {
                 if (process.getArrivalTime() <= currentTime && process.getRemainingTime() > 0 && process.getRemainingTime() < shortestRemainingTime && process.remainingTime != 0) {
                     shortestProcess = process;
                     shortestRemainingTime = process.getRemainingTime();
                 }
             }
+            currentProcess = shortestProcess;
 
             if (shortestProcess != null) {
-                if (currentProcess != null){
-                    if(timeline.size()==0){
+                if (currentProcess != null) {
+                    // Check if the current process is different from the last one in the timeline
+                    if (timeline.isEmpty() || !currentProcess.getName().equals(timeline.get(timeline.size() - 1))) {
                         timeline.add(currentProcess.getName());
-                        if (currentProcess.startTime == 0){
-                            currentProcess.startTime = currentTime;
-                        }
-                    }else if (currentProcess.getName() != timeline.get(timeline.size() - 1)){
-                        timeline.add(currentProcess.getName());
-                        if (currentProcess.startTime == 0){
+                        if (currentProcess.startTime == -1) {
                             currentProcess.startTime = currentTime;
                         }
                     }
                 }
-            
-                currentProcess = shortestProcess;
                 currentProcess.remainingTime -= 1;
                 if (currentProcess.remainingTime == 0) {
-                    currentProcess.finishTime = currentTime;
+                    currentProcess.finishTime = currentTime + 1;
                     executed++;
                     currentProcess = null;
-                    
                 }
             }
-
+    
             currentTime++;
         }
-
-        
+        for (Process p : readyQueue){
+            p.setTurnArroundTime(p.finishTime - p.getArrivalTime());
+            p.SetWaitingTime(p.getTurnArroundTime() - p.getBurst());
+        }
         System.out.println("SRTF Schedule: " + timeline);
-        for (Process process : readyQueue){
-            System.out.println(process.getName() + "     " + process.startTime + "     " + process.finishTime);
+        System.out.println("*************************************");
+        System.out.println("Name      Start time     Finish time");
+    
+        for (Process process : readyQueue) {
+            String formattedOutput = String.format("%-10s %-14d %-11d",
+                    process.getName(), process.startTime, process.finishTime);
+            System.out.println(formattedOutput);
         }
     }
+    public void getRangeProcess()
+    {
+        for(Process e : readyQueue)
+        {
+            
+            System.out.println("Proccess Name : " + e.getName());
+            System.out.println("process wating time : " +  e.getWaitingTime());
+            System.out.println("process turnarround time : "+ e.getTurnArroundTime());
+            System.out.println("*************************");
+        }
+    }    
+    public float getAvgWaitingTime()
+    {
+        float avg = 0 ; 
+        for(Process e : readyQueue)
+        {
+            avg += e.getWaitingTime() ; 
+        }
+
+        return avg / readyQueue.size();
+    }
+
 };

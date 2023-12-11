@@ -29,8 +29,8 @@ public class main {
 		}
         SRTF algo = new SRTF(Processes);
         algo.Scheduling(); 
-
-        
+		algo.getRangeProcess();
+		System.out.println("Average waiting time :  " + algo.getAvgWaitingTime());
 
     }
 }
