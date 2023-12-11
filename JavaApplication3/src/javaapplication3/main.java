@@ -10,7 +10,10 @@ public class main {
         ArrayList<Process> Processes = new ArrayList<Process>();
 		Scanner input = new Scanner(System.in);
         System.out.println("Enter n of processes :");
-		counter = input.nextInt();
+		counter = input.nextInt() ;
+
+		// System.out.println("Enter aging value :");
+		//int aging = input.nextInt() ;
 
         for(int i = 0 ; i < counter ;i++)
 		{
@@ -21,16 +24,21 @@ public class main {
 		
 			System.out.println("Enter Process Burst Time :");
 			p.setBurst(input.nextInt());
-            p.setRemainingTime(p.getBurst());
-		
+
 			System.out.println("Enter Process Arraival Time :");
 			p.setArrivalTime(input.nextInt()) ;
+			
+			// System.out.println("Enter Process priority :");
+			// p.setPriorty(input.nextInt()) ;
+			// p.setAging(aging) ;
 			Processes.add(p);	
 		}
-        SRTF algo = new SRTF(Processes);
+        SJF algo = new SJF(Processes, 0 );
         algo.Scheduling(); 
 		algo.getRangeProcess();
 		System.out.println("Average waiting time :  " + algo.getAvgWaitingTime());
+		System.out.println("Average waiting time :  " + algo.getAvgTurnArroundTime());
+
 
     }
 }
