@@ -103,27 +103,6 @@ public class SJF {
         System.out.println("Average Trun Around time : " + avg_t);
     }    
 
-    public float getAvgWaitingTime()
-    {
-        float avg = 0 ; 
-        for(Process e : readyQueue)
-        {
-            avg += e.getWaitingTime() ; 
-        }
-
-        return avg / readyQueue.size();
-    }
-
-    public float getAvgTurnArroundTime()
-    {
-        float avg = 0 ; 
-        for(Process e : readyQueue)
-        {
-            avg += e.getTurnArroundTime() ; 
-        }
-
-        return avg / readyQueue.size();
-    }
 
     public void setContextSwitching(int contextSwitch)
     {
