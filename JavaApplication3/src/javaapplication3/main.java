@@ -29,7 +29,7 @@ public class main {
 		}
         SRTF algo = new SRTF(Processes);
         algo.Scheduling(); 
-		algo.getRangeProcess();
+		
 		algo.stat();
 
     }

@@ -60,37 +60,26 @@ public class SJF {
     }
 
 
-    public void getRangeProcess()
+       
+
+    public void stats()
     {
+        float avg_w = 0 ;
+        float avg_t = 0; 
+        
         for(Process e : readyQueue)
         {
-            System.out.println("Proccess Name " + e.getName());
-            System.out.println("process wating time " +  e.getWaitingTime());
-            System.out.println("process turnarround time "+ e.getTurnArroundTime());
+            System.out.println("Proccess Name : " + e.getName());
+            System.out.println("process wating time : " +  e.getWaitingTime());
+            System.out.println("process turnarround time : "+ e.getTurnArroundTime());
             System.out.println("*************************");
+            avg_w += e.getWaitingTime() ;
+            avg_t += e.getTurnArroundTime();
         }
-    }    
-
-    public int getAvgWaitingTime()
-    {
-        int avg = 0 ; 
-        for(Process e : readyQueue)
-        {
-            avg += e.getWaitingTime() ; 
-        }
-
-        return avg / readyQueue.size();
-    }
-
-    public int getAvgTurnArroundTime()
-    {
-        int avg = 0 ; 
-        for(Process e : readyQueue)
-        {
-            avg += e.getTurnArroundTime() ; 
-        }
-
-        return avg / readyQueue.size();
+        avg_w = avg_w/readyQueue.size();
+        avg_t = avg_t/readyQueue.size();
+        System.out.println("Average Waiting time : " + avg_w);
+        System.out.println("Average Trun Around time : " + avg_t);
     }
 
 

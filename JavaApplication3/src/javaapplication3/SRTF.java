@@ -67,23 +67,18 @@ public class SRTF {
             System.out.println(formattedOutput);
         }
     }
-    public void getRangeProcess()
-    {
-        for(Process e : readyQueue)
-        {
-            
-            System.out.println("Proccess Name : " + e.getName());
-            System.out.println("process wating time : " +  e.getWaitingTime());
-            System.out.println("process turnarround time : "+ e.getTurnArroundTime());
-            System.out.println("*************************");
-        }
-    }    
+    
     public void stat()
     {
         float avg_w = 0 ;
         float avg_t = 0; 
+        
         for(Process e : readyQueue)
         {
+            System.out.println("Proccess Name : " + e.getName());
+            System.out.println("process wating time : " +  e.getWaitingTime());
+            System.out.println("process turnarround time : "+ e.getTurnArroundTime());
+            System.out.println("*************************");
             avg_w += e.getWaitingTime() ;
             avg_t += e.getTurnArroundTime();
         }
