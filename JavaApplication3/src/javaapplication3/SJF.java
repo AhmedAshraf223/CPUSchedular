@@ -97,12 +97,10 @@ public class SJF {
             avg_w += e.getWaitingTime() ;
             avg_t += e.getTurnArroundTime();
         }
-<<<<<<< HEAD
         avg_w = avg_w/readyQueue.size();
         avg_t = avg_t/readyQueue.size();
         System.out.println("Average Waiting time : " + avg_w);
         System.out.println("Average Trun Around time : " + avg_t);
-=======
     }    
 
     public float getAvgWaitingTime()
@@ -125,7 +123,6 @@ public class SJF {
         }
 
         return avg / readyQueue.size();
->>>>>>> fcda3389c04c9ba60a1432193e7ded1d17aef4aa
     }
 
     public void setContextSwitching(int contextSwitch)
@@ -185,6 +182,11 @@ public class SJF {
                     } 
                 }
                 return index ;
+    }
+
+    public void stat(){
+        getAvgTurnArroundTime() ;
+        getAvgWaitingTime() ;
     }
 
 
