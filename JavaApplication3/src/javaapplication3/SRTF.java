@@ -67,6 +67,7 @@ public class SRTF {
             System.out.println(formattedOutput);
         }
     }
+
     public void getRangeProcess()
     {
         for(Process e : readyQueue)
@@ -89,4 +90,16 @@ public class SRTF {
         return avg / readyQueue.size();
     }
 
-};
+    public float getAvgTurnArroundTime()
+    {
+        float avg = 0 ; 
+        for(Process e : readyQueue)
+        {
+            avg += e.getTurnArroundTime() ; 
+        }
+
+        return avg / readyQueue.size();
+    }
+
+
+}
