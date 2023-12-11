@@ -12,16 +12,18 @@ class Process {
     public int remainingTime;
     public int startTime;
     public int finishTime;
+    private int aging ;
 
     Process(){
         this.startTime = -1;
         this.finishTime = 0;
+        this.aging = 0 ; 
     }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
         this.arrivalTime = arrivalTime ; 
         this.burst = burst ;
-        this.remainingTime = brust;
+        this.remainingTime = burst;
     }
 
     Process(String name , int arrivalTime , int burst , int priority ){
@@ -80,20 +82,41 @@ class Process {
     {
         this.TurnaroundTime = TurnaroundTime ;
     }
+
     int getTurnArroundTime()
     {
         return TurnaroundTime ; 
     }
+
     int getRemainingTime(){
         return remainingTime; 
     }
+
     void setRemainingTime(int remainingTime){
         this.remainingTime = remainingTime;
     }
+
+    void setAging(int aging)
+    {
+        this.aging = aging ;
+    }
+    int getAging()
+    {
+        return this.aging ;
+    }
+
+    void solveStarvation()
+    {
+        priority -= aging ; 
+    }
+
+
     public int compareTo(Process other) {
         // Compare based on the 'burst' attribute
         return Integer.compare(this.burst, other.burst);
     }
+
+  
 }
     
     
