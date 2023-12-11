@@ -1,16 +1,15 @@
 package javaapplication3;
+
 import java.util.ArrayList;
 
-public class SJF {
+public class PriortyScheduling {
     private ArrayList<Process> processes;
     private ArrayList<Process> readyQueue = new ArrayList<Process>() ;
-    private int contextSwitching ; 
     private ArrayList<String> timeline = new ArrayList<>() ;
-    
-    SJF(ArrayList<Process> processes ,int contextSwitching)
+
+    PriortyScheduling(ArrayList<Process> processes)
     {
         this.processes = processes ; 
-        this.contextSwitching = contextSwitching ;
     }
 
     public void Scheduling()
@@ -21,7 +20,8 @@ public class SJF {
         {
             if (readyQueue.isEmpty())
             {
-                int index = 0 ; 
+                
+                // checking if arrival time for all process = 0 or not 
                 int flag= 1 ;
                 for(Process e : processes)
                 {
@@ -35,14 +35,18 @@ public class SJF {
                     }
                 }
 
+                // if flage = false then we will choose the most pritory process 
+                // else we will choose the first process attachecd to CPU 
+                int index = 0; 
                 if (flag == 0)
                 {
-                    index = getLeastBurst() ;
+                    index = getMaxPriorty() ;
                 }
                 else 
                 {
                     index = getLeastArrivalTime(); 
                 }
+
                 processes.get(index).startTime = 0  ;
                 processes.get(index).finishTime = processes.get(index).getBurst() ;
                 processes.get(index).setArrivalTime(0);
@@ -51,24 +55,27 @@ public class SJF {
                 readyQueue.add(processes.get(index)) ;
                 timeline.add(processes.get(index).getName()) ; 
                 processes.remove(index) ; 
+                solveStarvation();
          }
         // adding the least burst time to the list 
             else{
-            
-                int index = getLeastBurst();
-               
-                processes.get(index).setTurnArroundTime(processes.get(index).getBurst() + readyQueue.get(readyQueue.size()-1).getTurnArroundTime() + contextSwitching);
-                processes.get(index).SetWaitingTime(readyQueue.get(readyQueue.size()-1).getTurnArroundTime() + contextSwitching - processes.get(index).getArrivalTime());
-                processes.get(index).startTime = readyQueue.get(readyQueue.size()-1).getTurnArroundTime() + contextSwitching ;
+                
+                int index = getMaxPriorty(); 
+
+                processes.get(index).setTurnArroundTime(processes.get(index).getBurst() + readyQueue.get(readyQueue.size()-1).getTurnArroundTime());
+                processes.get(index).SetWaitingTime(readyQueue.get(readyQueue.size()-1).getTurnArroundTime() - processes.get(index).getArrivalTime());
+                processes.get(index).startTime = readyQueue.get(readyQueue.size()-1).getTurnArroundTime() ;
                 processes.get(index).finishTime = processes.get(index).startTime + processes.get(index).getBurst() ;
                 readyQueue.add(processes.get(index)); 
                 timeline.add(processes.get(index).getName()) ; 
                 processes.remove(index) ;
+                // solving starvation problem 
+                solveStarvation();
             }
 
         }  
         
-        System.out.println("SJF Schedule: " + timeline);
+        System.out.println("Proirity Schedule: " + timeline);
         System.out.println("*************************************");
         System.out.println("Name      Start time     Finish time");
     
@@ -81,28 +88,15 @@ public class SJF {
     }
 
 
-       
-
-    public void stats()
+    public void getRangeProcess()
     {
-        float avg_w = 0 ;
-        float avg_t = 0; 
-        
         for(Process e : readyQueue)
         {
-            System.out.println("Proccess Name : " + e.getName());
-            System.out.println("process wating time : " +  e.getWaitingTime());
-            System.out.println("process turnarround time : "+ e.getTurnArroundTime());
+            System.out.println("Proccess Name " + e.getName());
+            System.out.println("process wating time " +  e.getWaitingTime());
+            System.out.println("process turnarround time "+ e.getTurnArroundTime());
             System.out.println("*************************");
-            avg_w += e.getWaitingTime() ;
-            avg_t += e.getTurnArroundTime();
         }
-<<<<<<< HEAD
-        avg_w = avg_w/readyQueue.size();
-        avg_t = avg_t/readyQueue.size();
-        System.out.println("Average Waiting time : " + avg_w);
-        System.out.println("Average Trun Around time : " + avg_t);
-=======
     }    
 
     public float getAvgWaitingTime()
@@ -125,44 +119,40 @@ public class SJF {
         }
 
         return avg / readyQueue.size();
->>>>>>> fcda3389c04c9ba60a1432193e7ded1d17aef4aa
     }
 
-    public void setContextSwitching(int contextSwitch)
+    private void solveStarvation()
     {
-        this.contextSwitching = contextSwitch ;
+        for(Process e : processes)
+        {
+            e.solveStarvation();
+        }
     }
 
-    public int getContextSwitching()
+    private int getMaxPriorty()
     {
-        return this.contextSwitching;
-    }
-
-    private int getLeastBurst()
-    {
-          int leastBurst  =  processes.get(0).getBurst();
+          int maxProirity  =  processes.get(0).getPriorty();
                 int index = 0 ;
                 if(readyQueue.isEmpty())
                 {
                        for (int i = 1 ; i < processes.size() ; i ++)
                     {
-                        if(processes.get(i).getBurst() < leastBurst)
+                        if(processes.get(i).getPriorty() < maxProirity)
                         {
-                            leastBurst = processes.get(i).getBurst() ;
+                            maxProirity = processes.get(i).getPriorty() ;
                             index = i ;  
                         }
                     }
                     return index ;
                 }
-
                 else 
                 {
                     for (int i = 1 ; i < processes.size() ; i ++)
                     {
-                        if(processes.get(i).getBurst() < leastBurst &&  
+                        if(processes.get(i).getPriorty() < maxProirity &&  
                         processes.get(i).getArrivalTime() <= readyQueue.get(readyQueue.size()-1).getTurnArroundTime())
                         {
-                            leastBurst = processes.get(i).getBurst() ;
+                            maxProirity = processes.get(i).getPriorty() ;
                             index = i ;  
                         }
                     }
@@ -187,6 +177,4 @@ public class SJF {
                 return index ;
     }
 
-
-    
 }
