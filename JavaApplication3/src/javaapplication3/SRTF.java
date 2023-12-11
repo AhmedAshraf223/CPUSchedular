@@ -78,15 +78,19 @@ public class SRTF {
             System.out.println("*************************");
         }
     }    
-    public float getAvgWaitingTime()
+    public void stat()
     {
-        float avg = 0 ; 
+        float avg_w = 0 ;
+        float avg_t = 0; 
         for(Process e : readyQueue)
         {
-            avg += e.getWaitingTime() ; 
+            avg_w += e.getWaitingTime() ;
+            avg_t += e.getTurnArroundTime();
         }
-
-        return avg / readyQueue.size();
+        avg_w = avg_w/readyQueue.size();
+        avg_t = avg_t/readyQueue.size();
+        System.out.println("Average Waiting time : " + avg_w);
+        System.out.println("Average Trun Around time : " + avg_t);
     }
 
 };
