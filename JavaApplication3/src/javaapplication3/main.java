@@ -35,15 +35,8 @@ public class main {
 		}
         SJF algo = new SJF(Processes, 0 );
         algo.Scheduling(); 
-<<<<<<< HEAD
 		
 		algo.stat();
-=======
-		algo.getRangeProcess();
-		System.out.println("Average waiting time :  " + algo.getAvgWaitingTime());
-		System.out.println("Average waiting time :  " + algo.getAvgTurnArroundTime());
-
->>>>>>> fcda3389c04c9ba60a1432193e7ded1d17aef4aa
 
     }
 }
