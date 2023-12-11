@@ -184,11 +184,7 @@ public class SJF {
                 return index ;
     }
 
-    public void stat(){
-        getAvgTurnArroundTime() ;
-        getAvgWaitingTime() ;
-    }
-
+    
 
     
 }
