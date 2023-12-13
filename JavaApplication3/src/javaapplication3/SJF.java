@@ -83,7 +83,7 @@ public class SJF {
 
        
 
-    public void stats()
+    public void stat()
     {
         float avg_w = 0 ;
         float avg_t = 0; 
@@ -143,8 +143,7 @@ public class SJF {
                         }
                     }
                     return index ;
-                }
-             
+                } 
     }
 
     private int getLeastArrivalTime()
