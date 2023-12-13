@@ -12,8 +12,8 @@ public class main {
         System.out.println("Enter n of processes :");
 		counter = input.nextInt() ;
 
-		// System.out.println("Enter aging value :");
-		//int aging = input.nextInt() ;
+		System.out.println("Enter Quantum value :");
+		int quantum = input.nextInt() ;
 
         for(int i = 0 ; i < counter ;i++)
 		{
@@ -30,13 +30,14 @@ public class main {
 			
 			// System.out.println("Enter Process priority :");
 			// p.setPriorty(input.nextInt()) ;
-			// p.setAging(aging) ;
+			p.setQuantum(quantum);
+			p.setRemainingTime(p.getBurst());
 			Processes.add(p);	
 		}
-        SJF algo = new SJF(Processes, 0 );
-        algo.Scheduling(); 
+        AGShceduling algo = new AGShceduling(Processes);
+        algo.sheduling();; 
 		
-		algo.stat();
+		algo.getResults();
 
     }
 }
