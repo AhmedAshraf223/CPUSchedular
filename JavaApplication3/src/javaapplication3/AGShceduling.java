@@ -149,7 +149,7 @@ public class AGShceduling {
     }
 
 
-    private static boolean searchQueue(Deque<Process> queue, Process p ) {
+    private boolean searchQueue(Deque<Process> queue, Process p ) {
         for (Process element : queue) {
             if (element.getName() == p.getName()) {
                 return true; 
@@ -157,6 +157,8 @@ public class AGShceduling {
         }
         return false; // Element not found
     }
+
+    
       
     private  Process searchLeastAGQueue(Deque<Process> queue) {
         Process temp = queue.getFirst();
@@ -174,13 +176,13 @@ public class AGShceduling {
        
         generateAGFactor();
         int index = 0 ;
-        int counter = 1 ;
         // when starting the process ; 
         index = getLeastArrivalTime() ;
         readyQueue.addFirst(processes.get(index)) ; 
         readyQueue.peekFirst().startTime = curr  ;
         while(true)
         {
+            int counter = 1 ;
             for( ; counter <=readyQueue.peekFirst().getQuantum() ; counter ++)
             {
                 curr ++ ;
@@ -191,6 +193,7 @@ public class AGShceduling {
                     readyQueue.peekFirst().setBurst(0);
                     deleteProceess(readyQueue.peekFirst());
                     readyQueue.removeFirst() ; 
+                    break;
                 }
 
 
@@ -199,7 +202,7 @@ public class AGShceduling {
                 {
                     
                     // check if there are any process that has AG_factor less than the current process
-                    AtomicInteger INDEX = new AtomicInteger(index) ;
+                    AtomicInteger INDEX = new AtomicInteger(0) ;
                     if(switching(readyQueue.peekFirst(), INDEX))
                     {
                         // senario one if process used all its quantum time
@@ -236,8 +239,21 @@ public class AGShceduling {
 
                        
                     }
+
+                    else if(!switching(readyQueue.peekFirst(), INDEX) && counter == readyQueue.peekFirst().getQuantum())
+                    {
+                        //first we will implelment senario one 
+                        senario1(readyQueue.peekFirst());
+                        Process temp = searchLeastAGQueue(readyQueue) ; 
+                        readyQueue.remove(temp);
+                        readyQueue.addLast(readyQueue.peekFirst());
+                        readyQueue.removeFirst(); 
+                        readyQueue.addFirst(temp);
+                    }
                 }
+
             }
+
 
         }
 
