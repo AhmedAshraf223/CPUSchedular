@@ -10,14 +10,16 @@ class Process {
     private int WaitingTime;
 	private int TurnaroundTime;
     public int remainingTime;
-    public int startTime;
-    public int finishTime;
+    public int startTime = -1;
+    public int finishTime = 0;
     private int aging ;
+    private int quantum ; 
+    private int AG_factor ;
 
     Process(){
-        this.startTime = -1;
-        this.finishTime = 0;
         this.aging = 0 ; 
+        this.quantum = 0 ; 
+        this.AG_factor = 0 ;
     }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
@@ -31,6 +33,16 @@ class Process {
         this.arrivalTime = arrivalTime ; 
         this.burst = burst ;
         this.priority = priority ; 
+    }
+    // the constructor will be used
+    Process(String name , int arrivalTime , int burst , int priority , int AG , int quantum ){
+        this.name = name ;
+        this.arrivalTime = arrivalTime ; 
+        this.burst = burst ;
+        this.priority = priority ; 
+        this.AG_factor = AG ;
+        this.remainingTime = burst ; 
+        this.quantum = quantum ;
     }
 
     void setName(String name)
@@ -116,7 +128,26 @@ class Process {
         return Integer.compare(this.burst, other.burst);
     }
 
-  
+    public void setQuantum(int quantum)
+    {
+        this.quantum = quantum ;
+    }
+
+    public int getQuantum()
+    {
+        return this.quantum ; 
+    }
+
+    public void setAG(int AG_factor)
+    {
+        this.AG_factor = AG_factor;
+    }
+
+    public int getAG()
+    {
+        return this.AG_factor ; 
+    }
+
 }
     
     
