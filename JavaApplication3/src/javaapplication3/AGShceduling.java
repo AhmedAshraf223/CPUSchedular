@@ -2,7 +2,6 @@ package javaapplication3;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Deque;
@@ -68,7 +67,7 @@ public class AGShceduling {
     private float meanOfQuantum()
     {
         float avg = 0 ;
-        for(Process e : processes)
+        for(Process e : readyQueue)
         {
             avg += e.getQuantum() ;
         }
