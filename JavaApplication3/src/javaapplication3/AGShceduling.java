@@ -77,7 +77,7 @@ public class AGShceduling {
     private boolean checkFinish()
     {
         boolean flag = false ; 
-        for(Process e : processes)
+        for(Process e : readyQueue)
         {
             if(e.getBurst() == 0)
             {
@@ -229,7 +229,7 @@ public class AGShceduling {
                         {
                             Process temp = searchLeastAGQueue(readyQueue) ; 
                             readyQueue.remove(temp);
-                            readyQueue.addLast(readyQueue.getFirst());
+                            readyQueue.addLast(readyQueue.peekFirst());
                             readyQueue.removeFirst(); 
                             readyQueue.addFirst(temp); 
                         }
