@@ -1,10 +1,13 @@
-package javaapplication3;
+//package javaapplication3;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Deque;
+import java.util.Scanner;
+import java.util.Scanner;
 
 
 public class AGShceduling {
@@ -22,27 +25,28 @@ public class AGShceduling {
         this.size = processes.size() ;
     }
 
-    // a private function to generate AG factor
+   // a private function to generate AG factor
     
     private void generateAGFactor()
     {
         for(Process e : processes)
         {
-            // Random rand = new Random();
-            // int RF = rand.nextInt(21);
+        //     Random rand = new Random();
+        //     int RF = rand.nextInt(21);
 
-            // if(RF  < 10 )
-            // {
-            //     e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
-            // }
-            // else if (RF > 10 )
-            // {
-            //     e.setAG(10 + e.getArrivalTime() + e.getBurst());
-            // }
-            // else 
-            // {
-            //     e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
-            // }
+        //     if(RF  < 10 )
+        //     {
+        //         e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
+        //     }
+        //     else if (RF > 10 )
+        //     {
+        //         e.setAG(10 + e.getArrivalTime() + e.getBurst());
+        //     }
+        //     else 
+        //     {
+        //         e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
+        //     }
+        
             //////////////// lec example ////////////////////
             if(e.getName() =="p1")
             {
@@ -89,7 +93,7 @@ public class AGShceduling {
                         index = i ; 
                     } 
                 }
-                return index ;
+            return index ;
     }
 
     // a function to check if burst time for all process is 0 or not to end the algorithm ; 
@@ -104,24 +108,39 @@ public class AGShceduling {
     }
 
     // a process to check if there are any process has ag factor less than the current process ;
-    // we pass an int as refrencess to get the index of the smalles ag factor ; 
-    private boolean switching(Process p , AtomicInteger index)
+    // we pass an int as refrencess to get the index of the smallest ag factor ; 
+    private boolean checKswitching(Process p)
     {
         int minAGFactor = p.getAG() ;
-        int ind = 0 ; 
         boolean flag = false ;
         for(int i = 0 ; i < processes.size() ; i ++)
         {
             if(processes.get(i).getArrivalTime() <= curr && processes.get(i).getAG() < minAGFactor)
             {
-                ind = i  ;
-                minAGFactor = processes.get(ind).getAG() ; 
+                minAGFactor = processes.get(i).getAG() ; 
                 flag = true ;
             }
-            index.set(ind);
         }
         return flag ;
     }
+
+    private int switching(Process p)
+    {
+        int minAGFactor = p.getAG() ;
+        int index = 0 ; 
+  
+        for(int i = 0 ; i < processes.size() ; i ++)
+        {
+            if(processes.get(i).getArrivalTime() <= curr && processes.get(i).getAG() < minAGFactor)
+            {
+                index = i  ;
+                minAGFactor = processes.get(index).getAG() ; 
+            }
+        
+        }
+        return index ;
+    }
+
 
     // senario 1 when the running process used it's all quantum time ;
     private void senario1(Process p)
@@ -174,7 +193,7 @@ public class AGShceduling {
     private  Process searchLeastAGQueue(Deque<Process> queue) {
         Process temp = queue.peekFirst();
         for (Process element : queue) {
-            if (temp.getAG() < element.getAG()) {
+            if (element.getAG() < temp.getAG()) {
                 temp = element ;
             }
         }
@@ -186,49 +205,54 @@ public class AGShceduling {
     {
         generateAGFactor();
         int index = 0 ;
+        System.out.println(processes.get(index).getAG()+ " The ag factor of p1");
        // when starting the process ; 
         index = getLeastArrivalTime() ;
         readyQueue.addFirst(processes.get(index)) ; 
         readyQueue.peekFirst().startTime = curr  ;
+        System.out.println("first index" + index);
+        
         while(true)
         {
-            int counter = 1 ;
-            for( ; counter <=readyQueue.peekFirst().getQuantum() ; counter ++)
-            {
+            //System.out.println("currend process" + readyQueue.getFirst().getName());
 
-                System.out.println(readyQueue.getFirst().getName());
-   
+            for(int counter = 1; counter <= readyQueue.peekFirst().getQuantum(); counter ++)
+            {   
+                System.out.println("currend process" + readyQueue.getFirst().getName());
                 curr ++ ;
                 readyQueue.peekFirst().remainingTime -- ; 
                 if(readyQueue.peekFirst().remainingTime == 0 )
                 {
                     readyQueue.peekFirst().finishTime = curr ;
-                    readyQueue.peekFirst().setBurst(0);
-                    deleteProceess(readyQueue.peekFirst());
                     DieList.add(readyQueue.peekFirst()) ; 
+                    readyQueue.peekFirst().setBurst(0);
+                    deleteProceess(readyQueue.peekFirst()) ; 
                     readyQueue.removeFirst() ; 
                 }
 
                 if(readyQueue.isEmpty() && !processes.isEmpty())
                 {
-                        index = getLeastArrivalTime() ;
+                        index =  switching(processes.get(0));
                         readyQueue.addFirst(processes.get(index)) ; 
                         readyQueue.peekFirst().startTime = curr  ;
                         break ; 
                 }
-                else if (checkFinish())
+                if (checkFinish())
                 {
+                    System.out.println("fininsh process");
                     break ; 
                 }
             
-                // check if the currend burst time == ceil of 50 of total burst time
-                if(counter >= Math.ceil(readyQueue.peekFirst().getBurst()/2))
+                // check if the current burst time == ceil of 50 of total burst time
+                if(counter >= (int)Math.ceil(readyQueue.peekFirst().getQuantum()/2))
                 {
-                    
+                    System.out.println("Iam IN ciel");
+
                     // check if there are any process that has AG_factor less than the current process
-                    AtomicInteger INDEX = new AtomicInteger(0) ;
-                    if(switching(readyQueue.peekFirst(), INDEX))
+                    
+                    if(checKswitching(readyQueue.peekFirst()))
                     {
+                        System.out.println("Check Switching finally");
                         timeline.add(readyQueue.peekFirst().getName()) ; 
                         // senario one if process used all its quantum time
                         if(counter == readyQueue.peekFirst().getQuantum())
@@ -240,44 +264,50 @@ public class AGShceduling {
                         {
                             senario2(readyQueue.peekFirst(), counter);
                         }
-                        index = INDEX.get() ;
-
+                        index = switching(readyQueue.peekFirst());
+                 
                         // in case if the process not in ready queue unitil yet
                         // add the new process to the queue
                         if(!searchQueue(readyQueue, processes.get(index)))
                         {
-                
+                            System.out.println("the process not in readySwitching to prcoss " + processes.get(index).getName()) ; 
                             Process temp  = readyQueue.peekFirst() ;
                             readyQueue.removeFirst() ; 
                             readyQueue.addFirst(processes.get(index)) ;
                             readyQueue.addLast(temp);
                             timeline.add(readyQueue.peekFirst().getName());
                             readyQueue.peekFirst().startTime = curr ;
+                            break;
                         }
 
                         // in case the process in the ready qeueu ; 
                         else if (searchQueue(readyQueue, processes.get(index)))
                         {
+        
                             Process temp = searchLeastAGQueue(readyQueue) ; 
                             readyQueue.remove(temp);
                             readyQueue.addLast(readyQueue.peekFirst());
                             readyQueue.removeFirst(); 
                             readyQueue.addFirst(temp); 
-                            timeline.add(readyQueue.peekFirst().getName());
+                            System.out.println("process in ready queue Switching to prcoss " + temp.getName()) ; 
 
+                            timeline.add(readyQueue.peekFirst().getName());
+                            break;
                         }
-                        break ;
-                       
+                                                           
                     }
 
-                    else if(!switching(readyQueue.peekFirst(), INDEX) && counter == readyQueue.peekFirst().getQuantum())
+                    else if(!checKswitching(readyQueue.peekFirst()) && counter == readyQueue.peekFirst().getQuantum())
                     {
+
                         timeline.add(readyQueue.peekFirst().getName());
                         //first we will implelment senario one 
                         senario1(readyQueue.peekFirst());
                         // tehn add the current process to the end of the queue
                         readyQueue.addLast(readyQueue.peekFirst());
                         readyQueue.removeFirst(); 
+                        System.out.println("NO Swtiching ") ; 
+                        System.out.println("Switching to " + readyQueue.getFirst().getName()) ; 
                         break;
                     }
                 }
@@ -285,26 +315,22 @@ public class AGShceduling {
                 {
                     break ; 
                 }
-
             }
-
-            // finish the process
             if(checkFinish())
             {
-                break ; 
+                    break ; 
             }
-
-
         }
-
-    }
+    
+} 
 
     public void getResults()
     {
         System.out.println("Time Line IS : " + timeline);
         for (Process p : DieList){
             p.setTurnArroundTime(p.finishTime - p.getArrivalTime());
-            p.SetWaitingTime(p.getTurnArroundTime() - p.getBurst());
+            p.SetWaitingTime(p.finishTime - p.getBurst());
+
         }
 
         System.out.println("*************************************");
@@ -339,6 +365,7 @@ public class AGShceduling {
         System.out.println("Average Trun Around time : " + avg_t);
     }
 
-    
+
 
 }
+
