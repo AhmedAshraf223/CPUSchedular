@@ -219,14 +219,15 @@ public class AGShceduling {
 
                 timeline.add(readyQueue.peekFirst().getName());
 
-                System.out.println("currend process" + readyQueue.getFirst().getName());
+//                System.out.println("currend process" + readyQueue.getFirst().getName());
                 curr ++ ;
                 readyQueue.peekFirst().remainingTime -- ; 
-                if(readyQueue.peekFirst().remainingTime == 0 )
+                if(readyQueue.peekFirst().remainingTime == 0   )
                 {
                     readyQueue.peekFirst().finishTime = curr ;
                     DieList.add(readyQueue.peekFirst()) ; 
-                   // readyQueue.peekFirst().setBurst(0);
+                    readyQueue.peekFirst().setQuantum(0);
+                    getQuantumHis();
                     deleteProceess(readyQueue.peekFirst()) ; 
                     readyQueue.removeFirst() ; 
                 }
@@ -240,42 +241,33 @@ public class AGShceduling {
                 }
                 if (checkFinish())
                 {
-                    System.out.println("fininsh process");
                     break ; 
                 }
             
                 // check if the current burst time == ceil of 50 of total burst time
-                if(counter >= (int)Math.ceil(readyQueue.peekFirst().getQuantum()/2))
+                if(counter >= (int) Math.ceil((float)readyQueue.peekFirst().getQuantum()/(float)2))
                 {
-
                     // check if there are any process that has AG_factor less than the current process
-                    
                     if(checKswitching(readyQueue.peekFirst()))
                     {
-                        System.out.println("Check Switching finally");
                         // senario one if process used all its quantum time
                         if(counter == readyQueue.peekFirst().getQuantum())
                         {
                             senario1(readyQueue.peekFirst());
+                            getQuantumHis();
                         }
                         // senario two if the process don't use all of it's quantum
                         else if(counter < readyQueue.peekFirst().getQuantum())
                         {
-                            System.out.println("))))))))))) p1 Quantum " + readyQueue.peekFirst().getQuantum() );
-                            System.out.println("))))))))))) counter " + counter );
-
                             senario2(readyQueue.peekFirst(), counter);
-                            System.out.println("********* p1 Quantum " + readyQueue.peekFirst().getQuantum() );
-
+                            getQuantumHis();
                         }
-                        System.out.println("Quantum time for " +readyQueue.getFirst().getName() +"  "+ readyQueue.peekFirst().getQuantum()) ; 
                         index = switching(readyQueue.peekFirst());
                  
                         // in case if the process not in ready queue unitil yet
                         // add the new process to the queue
                         if(!searchQueue(readyQueue, processes.get(index)))
                         {
-                            System.out.println("the process not in readySwitching to prcoss " + processes.get(index).getName()) ; 
                             Process temp  = readyQueue.peekFirst() ;
                             readyQueue.removeFirst() ; 
                             readyQueue.addFirst(processes.get(index)) ;
@@ -294,7 +286,6 @@ public class AGShceduling {
                             readyQueue.addLast(readyQueue.peekFirst());
                             readyQueue.removeFirst(); 
                             readyQueue.addFirst(temp); 
-                            System.out.println("process in ready queue Switching to prcoss " + temp.getName()) ; 
 
 //                            timeline.add(readyQueue.peekFirst().getName());
                             break;
@@ -306,12 +297,11 @@ public class AGShceduling {
                     {
                         //first we will implelment senario one 
                         senario1(readyQueue.peekFirst());
+                        getQuantumHis();
                         // tehn add the current process to the end of the queue
                         readyQueue.addLast(readyQueue.peekFirst());
                         readyQueue.removeFirst(); 
                        // timeline.add(readyQueue.peekFirst().getName());
-                        System.out.println("NO Swtiching ") ; 
-                        System.out.println("Switching to " + readyQueue.getFirst().getName()) ; 
                         break;
                     }
                 }
@@ -370,6 +360,16 @@ public class AGShceduling {
         System.out.println("Average Trun Around time : " + avg_t);
     }
 
+    void getQuantumHis()
+    {
+        System.out.print(" History of quantum =>( ");
+        for(Process e : processes)
+        {
+            System.out.print(e.getQuantum() +  "  ");
+        }
+        System.out.println(")");
+
+    }
 
 
 }
