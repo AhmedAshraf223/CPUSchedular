@@ -31,39 +31,39 @@ public class AGShceduling {
     {
         for(Process e : processes)
         {
-            Random rand = new Random();
-            int RF = rand.nextInt(21);
+        //     Random rand = new Random();
+        //     int RF = rand.nextInt(21);
 
-            if(RF  < 10 )
+        //     if(RF  < 10 )
+        //     {
+        //         e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
+        //     }
+        //     else if (RF > 10 )
+        //     {
+        //         e.setAG(10 + e.getArrivalTime() + e.getBurst());
+        //     }
+        //     else 
+        //     {
+        //         e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
+        //     }
+        
+            //////////////// lec example ////////////////////
+            if(e.getName() =="p1")
             {
-                e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
+                e.setAG(20);
             }
-            else if (RF > 10 )
+            else if(e.getName()=="p2")
             {
-                e.setAG(10 + e.getArrivalTime() + e.getBurst());
+                e.setAG(17);
+            }
+            else if(e.getName() == "p3")
+            {
+                e.setAG(16);
             }
             else 
             {
-                e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
+                e.setAG(43);
             }
-        
-            //////////////// lec example ////////////////////
-            // if(e.getName() =="p1")
-            // {
-            //     e.setAG(20);
-            // }
-            // else if(e.getName()=="p2")
-            // {
-            //     e.setAG(17);
-            // }
-            // else if(e.getName() == "p3")
-            // {
-            //     e.setAG(16);
-            // }
-            // else 
-            // {
-            //     e.setAG(43);
-            // }
         }
     }
 
@@ -115,7 +115,7 @@ public class AGShceduling {
         boolean flag = false ;
         for(int i = 0 ; i < processes.size() ; i ++)
         {
-            if(processes.get(i).getArrivalTime() <= curr  && processes.get(i).getAG() < minAGFactor)
+            if(processes.get(i).getArrivalTime() <= curr && processes.get(i).getAG() < minAGFactor)
             {
                 minAGFactor = processes.get(i).getAG() ; 
                 flag = true ;
@@ -208,17 +208,17 @@ public class AGShceduling {
        // when starting the process ; 
         index = getLeastArrivalTime() ;
         readyQueue.addFirst(processes.get(index)) ; 
-        readyQueue.peekFirst().startTime = 0  ;
-        timeline.add(readyQueue.peekFirst().getName());
+        readyQueue.peekFirst().startTime = curr  ;
         
         while(true)
         {
             //System.out.println("currend process" + readyQueue.getFirst().getName());
 
-            for(int counter = 1; counter < readyQueue.peekFirst().getQuantum(); counter ++)
+            for(int counter = 1; counter <= readyQueue.peekFirst().getQuantum(); counter ++)
             {   
 
                 timeline.add(readyQueue.peekFirst().getName());
+
                 System.out.println("currend process" + readyQueue.getFirst().getName());
                 curr ++ ;
                 readyQueue.peekFirst().remainingTime -- ; 
@@ -226,6 +226,7 @@ public class AGShceduling {
                 {
                     readyQueue.peekFirst().finishTime = curr ;
                     DieList.add(readyQueue.peekFirst()) ; 
+                   // readyQueue.peekFirst().setBurst(0);
                     deleteProceess(readyQueue.peekFirst()) ; 
                     readyQueue.removeFirst() ; 
                 }
