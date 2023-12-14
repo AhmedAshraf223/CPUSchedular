@@ -1,4 +1,4 @@
-package javaapplication3;
+//package javaapplication3;
 import java.util.PriorityQueue;
 
 
@@ -33,14 +33,14 @@ class Process {
         this.arrivalTime = arrivalTime ; 
         this.burst = burst ;
         this.priority = priority ; 
+        this.remainingTime = burst ; 
     }
     // the constructor will be used
-    Process(String name , int arrivalTime , int burst , int priority , int AG , int quantum ){
+    Process(String name , int arrivalTime , int burst , int priority , int quantum ){
         this.name = name ;
         this.arrivalTime = arrivalTime ; 
         this.burst = burst ;
         this.priority = priority ; 
-        this.AG_factor = AG ;
         this.remainingTime = burst ; 
         this.quantum = quantum ;
     }
