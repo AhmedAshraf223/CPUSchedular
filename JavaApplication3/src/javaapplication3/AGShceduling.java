@@ -365,7 +365,7 @@ public class AGShceduling {
         System.out.print(" History of quantum =>( ");
         for(Process e : processes)
         {
-            System.out.print(e.getQuantum() +  "  ");
+            System.out.print(e.getName()+"=> "+e.getQuantum() +  ",  ");
         }
         System.out.println(")");
 
