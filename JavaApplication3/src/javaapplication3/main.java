@@ -60,9 +60,9 @@ public class main {
 				case 3:
 					int q = 1;	
 					for (Process p : Processes){
-					System.out.println("p"+ q + " "+ "Enter Process priority :");
-					p.setPriorty(input.nextInt());	
-					q++;
+						System.out.println("p"+ q + " "+ "Enter Process priority :");
+						p.setPriorty(input.nextInt());	
+						q++;
 					}	
 					System.out.println("Enter aging value for starvation :");
 					int ag= input.nextInt();
