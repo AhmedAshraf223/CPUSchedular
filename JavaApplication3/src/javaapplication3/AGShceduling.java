@@ -31,39 +31,39 @@ public class AGShceduling {
     {
         for(Process e : processes)
         {
-        //     Random rand = new Random();
-        //     int RF = rand.nextInt(21);
+            Random rand = new Random();
+            int RF = rand.nextInt(21);
 
-        //     if(RF  < 10 )
-        //     {
-        //         e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
-        //     }
-        //     else if (RF > 10 )
-        //     {
-        //         e.setAG(10 + e.getArrivalTime() + e.getBurst());
-        //     }
-        //     else 
-        //     {
-        //         e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
-        //     }
-        
-            //////////////// lec example ////////////////////
-            if(e.getName() =="p1")
+            if(RF  < 10 )
             {
-                e.setAG(20);
+                e.setAG(RF + e.getArrivalTime() + e.getBurst()) ;
             }
-            else if(e.getName()=="p2")
+            else if (RF > 10 )
             {
-                e.setAG(17);
-            }
-            else if(e.getName() == "p3")
-            {
-                e.setAG(16);
+                e.setAG(10 + e.getArrivalTime() + e.getBurst());
             }
             else 
             {
-                e.setAG(43);
+                e.setAG(e.getPriorty() + e.getArrivalTime() + e.getBurst());
             }
+        
+            //////////////// lec example ////////////////////
+            // if(e.getName() =="p1")
+            // {
+            //     e.setAG(20);
+            // }
+            // else if(e.getName()=="p2")
+            // {
+            //     e.setAG(17);
+            // }
+            // else if(e.getName() == "p3")
+            // {
+            //     e.setAG(16);
+            // }
+            // else 
+            // {
+            //     e.setAG(43);
+            // }
         }
     }
 
