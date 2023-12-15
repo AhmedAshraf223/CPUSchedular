@@ -18,7 +18,6 @@ class Process {
 
     Process(){
         this.aging = 0 ; 
-        
     }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
@@ -146,6 +145,7 @@ class Process {
     {
         return this.AG_factor ; 
     }
+
 
 }
     
