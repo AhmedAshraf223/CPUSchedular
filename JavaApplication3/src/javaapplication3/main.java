@@ -6,12 +6,24 @@ import java.util.Scanner;
 public class main {
     static public void main(String[] args)
     {
-        int n ; 
-        
+        int counter ; 
+        ArrayList<Process> Processes = new ArrayList<Process>();
 		Scanner input = new Scanner(System.in);
         System.out.println("Enter n of processes :");
-		n = input.nextInt() ;
-		
+		counter = input.nextInt() ;
+		for(int i = 0 ; i < counter ;i++){
+				input = new Scanner(System.in);
+				Process p = new Process();
+				System.out.println( (i+1) + " Enter Process Name :");
+				p.setName(input.nextLine());
+			
+				System.out.println("Enter Process Burst Time :");
+				p.setBurst(input.nextInt());
+
+				System.out.println("Enter Process Arraival Time :");
+				p.setArrivalTime(input.nextInt());
+				Processes.add(p);
+			}
 		mainLoop:
 		while (true){
 			System.out.println("1.SJF\n 2.SRTF\n 3.Priorty\n 4.AG\n 0.Exit\n");
@@ -20,8 +32,6 @@ public class main {
 			
 			switch (d) {
 				case 1:
-					ArrayList<Process> Processes = new ArrayList<Process>();
-					inputP(n , Processes);
 					int sw = 0;
 					String c ;
 					boolean wait = true ;
@@ -90,25 +100,6 @@ public class main {
 					break mainLoop;
 			}
 		
-
-		static void inputP(int n ,ArrayList<Process> Processes ){
-			Scanner input = new Scanner(System.in);
-			for(int i = 0 ; i < n ;i++)
-			{
-				
-				input = new Scanner(System.in);
-				Process p = new Process();
-				System.out.println( (i+1) + " Enter Process Name :");
-				p.setName(input.nextLine());
-				
-				
-				System.out.println("Enter Process Burst Time :");
-				p.setBurst(input.nextInt());
-			
-				
-				Processes.add(p);
-			
-		}
 		// System.out.println("Enter Quantum value :");
 		// int quantum = input.nextInt() ;
 
