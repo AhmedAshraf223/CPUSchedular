@@ -216,9 +216,9 @@ public class AGShceduling {
 
             for(int counter = 1; counter <= readyQueue.peekFirst().getQuantum(); counter ++)
             {   
-
-                timeline.add(readyQueue.peekFirst().getName());
-
+                if (timeline.isEmpty() || !readyQueue.peekFirst().getName().equals(timeline.get(timeline.size() - 1))){
+                    timeline.add(readyQueue.peekFirst().getName());
+                }
 //                System.out.println("currend process" + readyQueue.getFirst().getName());
                 curr ++ ;
                 readyQueue.peekFirst().remainingTime -- ; 
@@ -290,7 +290,7 @@ public class AGShceduling {
 //                            timeline.add(readyQueue.peekFirst().getName());
                             break;
                         }
-                                                           
+
                     }
 
                     else if(!checKswitching(readyQueue.peekFirst()) && counter == readyQueue.peekFirst().getQuantum())

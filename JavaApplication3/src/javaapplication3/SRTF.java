@@ -13,6 +13,9 @@ public class SRTF {
         this.processes = processes;
         this.readyQueue.addAll(processes);
         this.readyQueue.sort(Comparator.comparingInt(Process::getArrivalTime));
+        for (Process p : processes){
+            p.setRemainingTime(p.getBurst());
+        }
     }
 
     public void Scheduling() {

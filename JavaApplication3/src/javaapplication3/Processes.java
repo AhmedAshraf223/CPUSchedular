@@ -18,8 +18,7 @@ class Process {
 
     Process(){
         this.aging = 0 ; 
-        this.quantum = 0 ; 
-        this.AG_factor = 0 ;
+        
     }  
     Process(String name , int arrivalTime , int burst ){
         this.name = name ;
